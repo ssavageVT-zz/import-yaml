@@ -33,7 +33,7 @@ node {
             def yml = readYaml file: filename
 
             // Change the secret file in the property and encode it to base64
-            yml.data.secret = env.db_password | base64
+            yml.data.secret = env.db_password.bytes.encodeBase64().toString()
 
             sh "rm $filename"
             writeYaml file: filename, data: yml          

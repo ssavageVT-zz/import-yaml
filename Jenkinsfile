@@ -1,5 +1,9 @@
 node {
 
+    environment {
+        POSTGRES_DB_PASSWORD = 'test-password'
+    }
+
     stage('checkout and clean') {
         checkout scm
     }
@@ -24,19 +28,22 @@ node {
             sh 'echo $db_username'
             sh 'echo $db_password'
 
-            def filename = 'db-secret.yml'
-            def filenamenew = 'db-secret-new.yml'
-            def data = readYaml file: filename
-
-            // Change something in the file
-            data.secret = $db_password
-
-            sh "rm $filename"
-            writeYaml file: filenamenew, data: data
+            
         }
     }
 
     stage('change yaml config'){
+
+        def filename = 'db-secret.yml'
+            def filenamenew = 'db-secret-new.yml'
+            def data = readYaml file: filename
+
+            // Change something in the file
+            data.secret = $POSTGRES_DB_PASSWORD
+
+            sh "rm $filename"
+            writeYaml file: filenamenew, data: data
+
         sh 'echo empty block'
     }
 

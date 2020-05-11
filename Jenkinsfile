@@ -43,7 +43,7 @@ node {
             // Change something in the file
             data.secret = env.POSTGRES_DB_PASSWORD
 
-            sh "rm $filenamenew"
+            sh "rm $filename"
             writeYaml file: filenamenew, data: data
 
         sh 'echo empty block'

@@ -33,7 +33,7 @@ node {
             def yml = readYaml file: filename
 
             // Change something in the file
-            yml.data.secret = $db_password
+            yml.data.secret = env.db_password
 
             sh "rm $filename"
             writeYaml file: filenamenew, data: yml          

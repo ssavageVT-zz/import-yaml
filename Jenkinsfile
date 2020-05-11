@@ -29,14 +29,14 @@ node {
             sh 'echo $db_password'  
 
             def filename = 'db-secret.yml'
-            def filenamenew = 'db-secret-new.yml'
+            //def filenamenew = 'db-secret-new.yml'
             def yml = readYaml file: filename
 
             // Change something in the file
             yml.data.secret = env.db_password
 
             sh "rm $filename"
-            writeYaml file: filenamenew, data: yml          
+            writeYaml file: filename, data: yml          
         }
     }
 

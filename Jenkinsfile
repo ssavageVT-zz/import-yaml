@@ -34,7 +34,7 @@ node {
 
     stage('change yaml config'){
 
-        sh 'echo db password from env is: ${POSTGRES_DB_PASSWORD}'
+        sh 'echo db password from env is: ${env.POSTGRES_DB_PASSWORD}'
 
         def filename = 'db-secret.yml'
             def filenamenew = 'db-secret-new.yml'

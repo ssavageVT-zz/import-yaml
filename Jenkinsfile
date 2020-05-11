@@ -23,21 +23,19 @@ node {
         withVault([configuration: configuration, vaultSecrets: secrets]) {
             sh 'echo $db_username'
             sh 'echo $db_password'
-
-            def filename = 'db-secret.yml'
-            def filenamenew = 'db-secret-new.yml'
-            def data = readYaml file: filename
-
-            // Change something in the file
-            data.secret = $db_password
-
-            sh "rm $filename"
-            writeYaml file: filenamenew, data: data
         }
     }
 
     stage('change yaml config'){
-        echo 'empty stage'
+        def filename = 'db-secret.yml'
+            def filenamenew = 'db-secret-new.yml'
+            def data = readYaml file: filename
+
+            // Change something in the file
+            data.secret = ${env.db_password}
+
+            sh "rm $filename"
+            writeYaml file: filenamenew, data: data
     }
 
 }

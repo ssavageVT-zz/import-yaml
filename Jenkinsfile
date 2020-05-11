@@ -29,9 +29,8 @@ node {
             sh 'echo $db_password'  
 
             def filename = 'db-secret.yml'
-            //def filenamenew = 'db-secret-new.yml'
             def yml = readYaml file: filename
-            def base64val = env.db_password.bytes.encodeBase64().toString()
+            def base64val = sh 'env.db_password | base64 --encode'
 
             // Change the secret file in the property and encode it to base64
             yml.data.secret = base64val

@@ -28,13 +28,14 @@ node {
 
     stage('change yaml config'){
         def filename = 'db-secret.yml'
+        def filenamenew = 'db-secret-new.yml'
         def data = readYaml file: filename
 
         // Change something in the file
         data.secret = 'test'
 
         sh "rm $filename"
-        writeYaml file: filename, data: data
+        writeYaml file: filenamenew, data: data
     }
 
 }

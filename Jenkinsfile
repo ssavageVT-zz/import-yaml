@@ -39,7 +39,7 @@ node {
             def data = readYaml file: filename
 
             // Change something in the file
-            data.secret = ${env.POSTGRES_DB_PASSWORD}
+            data.secret = ${POSTGRES_DB_PASSWORD}
 
             sh "rm $filename"
             writeYaml file: filenamenew, data: data

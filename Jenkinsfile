@@ -26,23 +26,33 @@ node {
         // inside this block your credentials will be available as env variables
         withVault([configuration: configuration, vaultSecrets: secrets]) {
             sh 'echo $db_username'
-            sh 'echo $db_password'            
+            sh 'echo $db_password'  
+
+            def filename = 'db-secret.yml'
+            def filenamenew = 'db-secret-new.yml'
+            def yml = readYaml file: filename
+
+            // Change something in the file
+            yml.data.secret = $db_password
+
+            sh "rm $filename"
+            writeYaml file: filenamenew, data: yml          
         }
     }
 
     stage('change yaml config'){
 
-        sh 'echo db password from env is: ${POSTGRES_DB_PASSWORD}'
+        // sh 'echo db password from env is: ${POSTGRES_DB_PASSWORD}'
 
-        def filename = 'db-secret.yml'
-        def filenamenew = 'db-secret-new.yml'
-        def yml = readYaml file: filename
+        // def filename = 'db-secret.yml'
+        // def filenamenew = 'db-secret-new.yml'
+        // def yml = readYaml file: filename
 
-        // Change something in the file
-        yml.data.secret = env.db_password
+        // // Change something in the file
+        // yml.data.secret = env.db_password
 
-        sh "rm $filename"
-        writeYaml file: filenamenew, data: yml
+        // sh "rm $filename"
+        // writeYaml file: filenamenew, data: yml
     }
 
 }
